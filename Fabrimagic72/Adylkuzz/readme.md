@@ -15,7 +15,12 @@ I wouldn't trust a program that exports:
 
 ![Export Table](./DIE.png)
 
-This confirm we wont be able to just read assembly , since it's packed only when ran will it be readable.
+Packer : VMPROTECT (V3.0.0) 
+For those who are unfamiliar with packers this one will encode the whole 'program' with a custom made function that will decode all the functions at runtime
+up until this version you can run it and place a hook on each function call , dump the program find the new entry points and you'll have un unpacked executable 
+
+sound easy ? 
+it is... time costly.
 
 
 
