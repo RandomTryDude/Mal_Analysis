@@ -25,3 +25,7 @@ Basically create a c# file to compile under %temp% [random_name].cmdline
 then use cvtres& csc.exe to compile it 
 
 then it crash powershell and hide itself to contact a new server but so far i cant find it.
+
+So i have two way from there 
+first one , Spend 5 more hours to rebuild a test of a a python script to unpack the shellcode ...
+Or make sure that whatever CSC is run with as argument will be dumped 
