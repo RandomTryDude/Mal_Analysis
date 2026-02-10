@@ -31,3 +31,5 @@ first one , Spend 5 more hours to rebuild a test of a a python script to unpack 
 Or make sure that whatever CSC is run with as argument will be dumped 
 
 So for my first JAB , i'll try to dump the content of the first argument passed to csc.exe 
+
+-> Didnt work , make sense just a helper function 
