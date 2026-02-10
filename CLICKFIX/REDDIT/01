@@ -17,3 +17,11 @@ Identified as a DONUT shellcode in 0.9.2 and load it inside a thread for executi
 Reading the source code for DONUT 0.9.2 we can see the first byte any shellcode should be an OPCODE of 0xE8 
 
 For now only UNDONUT work in static but ... for donut 0.9.3 and there was a lot of change in between versions.
+
+SO , since so far my attemps at extracting the payload fail we are now moving any further 
+
+BUT for funsies i've launched it 
+Basically create a c# file to compile under %temp% [random_name].cmdline 
+then use cvtres& csc.exe to compile it 
+
+then it crash powershell and hide itself to contact a new server but so far i cant find it.
