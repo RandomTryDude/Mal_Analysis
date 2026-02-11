@@ -33,3 +33,7 @@ Or make sure that whatever CSC is run with as argument will be dumped
 So for my first JAB , i'll try to dump the content of the first argument passed to csc.exe 
 
 -> Didnt work , make sense just a helper function 
+
+Okay so new try , RUN IT. 
+But you can run shellcode as is right so 
+-> https://github.com/accidentalrebel/shcode2exe 
