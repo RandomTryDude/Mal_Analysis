@@ -156,6 +156,9 @@ From these we can supposse there's some .net in there based on clr.dll & mscore 
 
 
 once found -> 
+Got the .net , now ... <img width="784" height="210" alt="image" src="https://github.com/user-attachments/assets/b10ed23f-dc20-4fda-91d3-9b86bbd8598a" />
+
+MORE READING 
 
 ------------------------------------------------------------
 
