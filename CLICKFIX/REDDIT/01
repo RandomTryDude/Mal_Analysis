@@ -102,13 +102,13 @@ After execution, additional payloads were fetched:
 
 ### cptchbuild.bin (Detected by DIE)
 
-![cptchbuild.bin](./img/cptch_build_die.png)
+![cptchbuild.bin](./cptch_build_die.png)
 
 ---
 
 ### clipx64.bin (Detected by DIE)
 
-![clipx64.bin](./img/DIE_clipx64.bin.png)
+![clipx64.bin](./DIE_clipx64.bin.png)
 
 Quick virus total : 
 https://www.virustotal.com/gui/file/a609325c84a73341fea831ffdb3e29c8d9c1619eb09669cf489abdf9955b4dd6/ -> clipx64.bin -> 'The sample is a cryptocurrency clipboard hijacker designed to intercept and replace wallet addresses.' (from the virus total analyssi) 
