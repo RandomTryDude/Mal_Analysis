@@ -37,3 +37,5 @@ So for my first JAB , i'll try to dump the content of the first argument passed 
 Okay so new try , RUN IT. 
 But you can run shellcode as is right so 
 -> https://github.com/accidentalrebel/shcode2exe 
+
+afterward from the same ip as before it will fetch cptchbuild.bin & clipx64.bin 
