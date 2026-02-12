@@ -136,6 +136,16 @@ f7 to progress inside that function and it make more sense :
 <img width="380" height="120" alt="bitdow" src="https://github.com/user-attachments/assets/29387977-a7bd-46e0-ae44-cc5589eb4ed4" />
 that's indeed a DLL_loader let's keep a breakpoint on it for now 
 
+Work it a bit further again and while procmon work behold 
+ 
+ <img width="969" height="74" alt="image" src="https://github.com/user-attachments/assets/560a491f-8655-453a-b9c9-b01241cf6194" />
+
+ Someone tried to check if he had internet ;)
+  <img width="1352" height="123" alt="image" src="https://github.com/user-attachments/assets/ea82a0d0-6358-49df-a887-a00619325ef5" />
+
+  TO be fair , pressed f8 to run over the function that was the culprit so it ran without safeguard ... which is why i know up to the no internet what it does 
+  Now i'll go back to that function and dive in it 
+
 
 
 once found -> 
