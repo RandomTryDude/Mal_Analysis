@@ -118,6 +118,28 @@ https://www.virustotal.com/gui/file/5788aabdff9e405ae8e4d1f16d34a78ebac955f9f3c5
 From:
 94[.]154[.]35[.]115
 
+
+
+
+From a pure analysis We'll first find where the dll are loaded 
+<img width="400" height="134" alt="DLL_LOADER" src="https://github.com/user-attachments/assets/6e73bae4-10a1-4b1e-897e-bab582a02aab" />
+
+We got that first function that each time is executed will load a DLL 
+We can also see it take a list of DLL name as argument in RBX 
+<img width="586" height="288" alt="argsrbx" src="https://github.com/user-attachments/assets/a77e40ef-6e3f-4efd-9a10-ce18fbb2416d" />
+, so let's disect it :
+we first find this string  <img width="458" height="318" alt="Inside_Func" src="https://github.com/user-attachments/assets/9ad08917-f154-482d-b030-9049a1fd1ebe" />
+which hint we are indeed in the part that add the .dll 
+a bit down further and we can see a call to this <img width="380" height="120" alt="bitdow" src="https://github.com/user-attachments/assets/c3e2c8b6-165d-4f01-987e-9e28b3950b0f" />
+but `qword [rsi+30h]` isnt anything like that 
+f7 to progress inside that function and it make more sense : 
+<img width="380" height="120" alt="bitdow" src="https://github.com/user-attachments/assets/29387977-a7bd-46e0-ae44-cc5589eb4ed4" />
+that's indeed a DLL_loader let's keep a breakpoint on it for now 
+
+
+
+once found -> 
+
 ------------------------------------------------------------
 
 Infection Chain Summary
