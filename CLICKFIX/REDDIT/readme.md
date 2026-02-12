@@ -152,7 +152,7 @@ we got the first one that import about a LOT more dll
 (that's about 1 / 4th) 
 BUT doesnt execute anything further the STOP_SKIPPING_ME function , call cmd.exe to ping 1.0.0.1 and close if there's no answers 
 
-
+From these we can supposse there's some .net in there based on clr.dll & mscore import so , let's see if we can find & extract it 
 
 
 once found -> 
