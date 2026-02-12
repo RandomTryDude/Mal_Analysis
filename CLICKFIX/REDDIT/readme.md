@@ -145,6 +145,13 @@ Work it a bit further again and while procmon work behold
 
   TO be fair , pressed f8 to run over the function that was the culprit so it ran without safeguard ... which is why i know up to the no internet what it does 
   Now i'll go back to that function and dive in it 
+without skipping them we get down to 2 Function that do a LOT 
+<img width="415" height="247" alt="image" src="https://github.com/user-attachments/assets/9ea2a349-598e-4f80-9db2-00584dbbaa7a" />
+we got the first one that import about a LOT more dll 
+<img width="547" height="252" alt="image" src="https://github.com/user-attachments/assets/eaa1b71b-cbf7-4688-9074-fb60a0a94c31" />
+(that's about 1 / 4th) 
+BUT doesnt execute anything further the STOP_SKIPPING_ME function , call cmd.exe to ping 1.0.0.1 and close if there's no answers 
+
 
 
 
