@@ -80,7 +80,6 @@ cptch.bin performs the following actions:
 
 2) Executes both payloads
 
-
 --------------------------------------------------------------------
 clipx64.bin
 --------------------------------------------------------------------
@@ -88,7 +87,6 @@ clipx64.bin
 - Native C++ executable
 - Identified as cryptocurrency clipboard hijacker
 - Intercepts and replaces wallet addresses
-
 
 --------------------------------------------------------------------
 cptchbuild.bin
@@ -114,7 +112,7 @@ Observed behavior:
 - Inserts persistence entry in registry
 - Establishes TCP connection to C2:
 
-  158.94.210.166 : 9993
+  158[.]94[.]210[.]166 : 9993
 
 - Encrypts communication using AES-256
 - Performs anti-VM and anti-debug checks
@@ -164,7 +162,7 @@ cptchbuild.bin builds .NET implant (file33.exe)
 file33.exe:
     - Self deletes
     - Writes registry persistence
-    - Connects to 158.94.210.166:9993
+    - Connects to 158[.]94[.]210[.]166[:]9993
     - Encrypts traffic via AES-256
     - Performs anti-VM / anti-debug
         ↓
