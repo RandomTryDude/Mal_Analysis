@@ -6,3 +6,7 @@ Initial load can be downloaded via
 
 Process will use process carving / vacancy into snmtp.exe ( legitimate windows process) and download further (still under analysis) 
 And use a donut loader to hide the payload injection into snmtp
+
+
+Capapility : ClipBoard Hijack 
+
