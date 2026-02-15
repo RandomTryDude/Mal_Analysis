@@ -47,5 +47,19 @@ We can now confirm there's a remote checking server in place :
 So we are in fact working on a malware that's proposed as a service . 
 
 
+for our purpose we are gonna bypass the key verification 
+ <img width="627" height="126" alt="image" src="https://github.com/user-attachments/assets/660f8716-30ea-426b-9326-ce00fa1410da" />
+ this check basically compare the len of RSI (remote_check) to 4 
+If not equal , we go contact our remote website to check for the license 
+or check if the string in rsi is 'none'
+<img width="462" height="76" alt="image" src="https://github.com/user-attachments/assets/ba76e765-2510-49bc-9a62-8d54d1fa5019" />
+if it is : 
+<img width="580" height="116" alt="image" src="https://github.com/user-attachments/assets/af7d2866-066a-46cc-855d-b2b7bbffd5c8" />
+
+we get to skip the key Otherwise the program exit itself.
+
+
+
+
 
 
