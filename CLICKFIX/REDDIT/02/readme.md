@@ -78,7 +78,15 @@ Which further launch Using wscript.exe :
 
 and at that point we'll start keepting a tab on the IOCS
 
+THe ps1 irm/iex basically download Deno , a legitimita javascript runtime to further execute the JS inside the base64 
 
+
+The javascript will contain 'some' layer of obfuscation : 
+
+<img width="1849" height="414" alt="image" src="https://github.com/user-attachments/assets/807be908-2cfa-4175-b826-ce8f93565695" />
+
+
+Biggest point act as a link between the victim  and the C2 , can connect / schedule / wait run commands and so on 
 
 
 
