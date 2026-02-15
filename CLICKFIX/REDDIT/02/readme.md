@@ -138,3 +138,4 @@ The JavaScript contains multiple layers of obfuscation:
         netstat -ano | findstr 10044
 
     (Port 10044 used for C2 communication)
+    
