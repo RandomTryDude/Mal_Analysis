@@ -31,10 +31,21 @@ So From the golang analysis :
 <img width="576" height="92" alt="image" src="https://github.com/user-attachments/assets/02d2cca6-bcb1-46a1-9068-857a66b51c28" />
 
 We can expect some remote KEY checking if we dive a bit into this function : 
+
 <img width="438" height="270" alt="image" src="https://github.com/user-attachments/assets/4a5ac6a6-fd45-4d86-b171-95ac346b8cad" />
+
 
 we got a post request on a remote worker  that is decoded a bit earlier in the decrypt() function 
 <img width="364" height="65" alt="image" src="https://github.com/user-attachments/assets/d3ce6363-021a-4bf7-ac56-37bd93bb1194" />
+
+
+
+We can now confirm there's a remote checking server in place : 
+
+<img width="855" height="176" alt="image" src="https://github.com/user-attachments/assets/f06c0610-6379-4729-8c9d-407517b9b81d" />
+
+So we are in fact working on a malware that's proposed as a service . 
+
 
 
 
