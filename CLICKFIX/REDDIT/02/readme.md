@@ -10,4 +10,5 @@ Initial Discovery :
 Clear the junk and you basically get a base64 string that's first reverse , decoded from base64 & reverse again 
 This one will download 'OpenVPN-2.6.17-I001-amd64.msi' from the same storage.googleapis.com as before
 and execute it. 
-(on the S3 bucket there's a few different payloads ) 
+(on the S3 bucket there's a few different payloads )
+The storage in question has been reported , i took some time to dump it if you wanna parse it it will be inside S3_Content.zip per usual password is infected
