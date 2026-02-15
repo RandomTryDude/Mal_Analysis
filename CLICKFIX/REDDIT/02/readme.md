@@ -97,6 +97,34 @@ Otherwise, the program exits.
 The malware connects to its main C2 server to retrieve additional
 instructions.
 
+The task are of different type : 
+- Execute_BAT
+- Execute_Exe
+- Execute_PS1
+- Execute_CMD 
+To know which one's which , the program basically run for a if/else
+
+<img width="510" height="126" alt="image" src="https://github.com/user-attachments/assets/a69b9604-9d46-4df4-977b-7fdc81bb2d00" />
+
+Compare the first letter and move on in our case we branche to ps1 
+each retrieve a particular file from the s3 bucket 
+
+A task is recieve as a json object : 
+
+<img width="939" height="194" alt="image" src="https://github.com/user-attachments/assets/f1f2ac4b-9eb4-48f3-ab1e-f63765c82580" />
+
+that contain the address of where to fetch it , First from base64 then from AES - GCM 
+
+For the ps1 it will decode as such : 
+
+<img width="875" height="74" alt="image" src="https://github.com/user-attachments/assets/d09b4ec6-901a-4ed2-9400-ce77e60105d1" />
+
+Then be saved & executed : 
+
+<img width="662" height="378" alt="image" src="https://github.com/user-attachments/assets/caa76d15-05e0-4e3e-9046-5f310bc5e634" />
+
+once executed the main program will loop back for further task from the command server
+
 It downloads a secondary file:
 
 ![](https://github.com/user-attachments/assets/850be4f1-5dc1-44a9-b74e-e02f68c439a8)
