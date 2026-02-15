@@ -12,3 +12,12 @@ This one will download 'OpenVPN-2.6.17-I001-amd64.msi' from the same storage.goo
 and execute it. 
 (on the S3 bucket there's a few different payloads )
 The storage in question has been reported , i took some time to dump it if you wanna parse it it will be inside S3_Content.zip per usual password is infected
+
+
+
+
+
+
+checkbinary.exe (A golang file) 
+
+Appear to check for valid license key (possible MAAS ?) 
