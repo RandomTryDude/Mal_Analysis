@@ -60,6 +60,14 @@ we get to skip the key Otherwise the program exit itself.
 
 
 
+NExt the malware will join the main server/tasks to fetch it's new instructions 
+in our case download a new file Namely : 
+
+<img width="971" height="66" alt="image" src="https://github.com/user-attachments/assets/850be4f1-5dc1-44a9-b74e-e02f68c439a8" />
+
+& execute it 
+
+
 
 
 
