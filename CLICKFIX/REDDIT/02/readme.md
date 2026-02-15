@@ -21,3 +21,20 @@ The storage in question has been reported , i took some time to dump it if you w
 checkbinary.exe (A golang file) 
 
 Appear to check for valid license key (possible MAAS ?) 
+
+
+
+So From the golang analysis : 
+
+
+
+<img width="576" height="92" alt="image" src="https://github.com/user-attachments/assets/02d2cca6-bcb1-46a1-9068-857a66b51c28" />
+
+We can expect some remote KEY checking if we dive a bit into this function : 
+<img width="438" height="270" alt="image" src="https://github.com/user-attachments/assets/4a5ac6a6-fd45-4d86-b171-95ac346b8cad" />
+
+we got a post request on a remote worker  that is decoded a bit earlier in the decrypt() function 
+<img width="364" height="65" alt="image" src="https://github.com/user-attachments/assets/d3ce6363-021a-4bf7-ac56-37bd93bb1194" />
+
+
+
