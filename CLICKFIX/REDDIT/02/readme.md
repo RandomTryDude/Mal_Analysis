@@ -120,7 +120,7 @@ The JavaScript contains multiple layers of obfuscation:
 
 ### Core Functionality
 
--   Acts as a bridge between victim and C2\
+-   Acts as a bridge between victim and C2\ (4 different server , hardcoded)
 -   Maintains persistent connectivity\
 -   Receives, schedules, and executes remote commands\
 -   Manages task orchestration
