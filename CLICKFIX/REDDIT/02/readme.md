@@ -1,92 +1,140 @@
-Source Thread: 
-https://www.reddit.com/r/cybersecurity_help/comments/1r4ae25/what_does_this_clickfixlumma_infostealer_ps/ 
+# ClickFix / Lumma Infostealer Analysis
 
+Source Thread:\
+https://www.reddit.com/r/cybersecurity_help/comments/1r4ae25/what_does_this_clickfixlumma_infostealer_ps/
 
---------------------------
-Initial Discovery : 
+------------------------------------------------------------------------
 
-- The main ps1 command will download & execute instruction from a storage.googleapis.com/release-v5-dl/fin2.txt & run it with IEX 
-- The downloaded file will set $errorActionPreference to SilentlyContinue and hide the next code line into big text blob that will throw an error 
-Clear the junk and you basically get a base64 string that's first reverse , decoded from base64 & reverse again 
-This one will download 'OpenVPN-2.6.17-I001-amd64.msi' from the same storage.googleapis.com as before
-and execute it. 
-(on the S3 bucket there's a few different payloads )
-The storage in question has been reported , i took some time to dump it if you wanna parse it it will be inside S3_Content.zip per usual password is infected
+## Initial Discovery
 
+The primary PowerShell (.ps1) command downloads and executes
+instructions from:
 
+`storage.googleapis.com/release-v5-dl/fin2.txt`
 
+using **IEX (Invoke-Expression)**.
 
+The downloaded script sets:
 
+``` powershell
+$errorActionPreference = "SilentlyContinue"
+```
 
-checkbinary.exe (A golang file) 
+It then hides the malicious payload inside a large text blob designed to
+generate errors and obstruct analysis.
 
-Appear to check for valid license key (possible MAAS ?) 
+After removing the junk content, we obtain a Base64 string that is:
 
+1.  Reversed\
+2.  Base64-decoded\
+3.  Reversed again
 
+The resulting payload downloads:
 
-So From the golang analysis : 
+`OpenVPN-2.6.17-I001-amd64.msi`
 
+from the same storage bucket and executes it.
 
+The storage bucket contains multiple payload variants.\
+The storage was reported and fully dumped into:
 
-<img width="576" height="92" alt="image" src="https://github.com/user-attachments/assets/02d2cca6-bcb1-46a1-9068-857a66b51c28" />
+`S3_Content.zip`\
+Password: `infected`
 
-We can expect some remote KEY checking if we dive a bit into this function : 
+------------------------------------------------------------------------
 
-<img width="438" height="270" alt="image" src="https://github.com/user-attachments/assets/4a5ac6a6-fd45-4d86-b171-95ac346b8cad" />
+## checkbinary.exe (Golang Binary)
 
+This executable appears to validate a license key, suggesting a
+**Malware-as-a-Service (MaaS)** model.
 
-we got a post request on a remote worker  that is decoded a bit earlier in the decrypt() function 
-<img width="364" height="65" alt="image" src="https://github.com/user-attachments/assets/d3ce6363-021a-4bf7-ac56-37bd93bb1194" />
+### Golang Analysis
 
+![](https://github.com/user-attachments/assets/02d2cca6-bcb1-46a1-9068-857a66b51c28)
 
+Further inspection suggests remote key validation:
 
-We can now confirm there's a remote checking server in place : 
+![](https://github.com/user-attachments/assets/4a5ac6a6-fd45-4d86-b171-95ac346b8cad)
 
-<img width="855" height="176" alt="image" src="https://github.com/user-attachments/assets/f06c0610-6379-4729-8c9d-407517b9b81d" />
+A POST request is sent to a remote worker.\
+The endpoint is decoded earlier in a `decrypt()` function:
 
-So we are in fact working on a malware that's proposed as a service . 
+![](https://github.com/user-attachments/assets/d3ce6363-021a-4bf7-ac56-37bd93bb1194)
 
+This confirms a centralized license verification server:
 
-for our purpose we are gonna bypass the key verification 
- <img width="627" height="126" alt="image" src="https://github.com/user-attachments/assets/660f8716-30ea-426b-9326-ce00fa1410da" />
- this check basically compare the len of RSI (remote_check) to 4 
-If not equal , we go contact our remote website to check for the license 
-or check if the string in rsi is 'none'
-<img width="462" height="76" alt="image" src="https://github.com/user-attachments/assets/ba76e765-2510-49bc-9a62-8d54d1fa5019" />
-if it is : 
-<img width="580" height="116" alt="image" src="https://github.com/user-attachments/assets/af7d2866-066a-46cc-855d-b2b7bbffd5c8" />
+![](https://github.com/user-attachments/assets/f06c0610-6379-4729-8c9d-407517b9b81d)
 
-we get to skip the key Otherwise the program exit itself.
+Conclusion: the malware operates under a service-based model with
+centralized validation.
 
+------------------------------------------------------------------------
 
+## License Verification Logic
 
-NExt the malware will join the main server/tasks to fetch it's new instructions 
-in our case download a new file Namely : 
+![](https://github.com/user-attachments/assets/660f8716-30ea-426b-9326-ce00fa1410da)
 
-<img width="971" height="66" alt="image" src="https://github.com/user-attachments/assets/850be4f1-5dc1-44a9-b74e-e02f68c439a8" />
+This condition compares the length of `remote_check` (RSI) to 4.
 
-& execute it 
+If length ≠ 4: - The binary contacts the remote server for license
+validation\
+OR\
+- Checks if the string equals `"none"`
 
+![](https://github.com/user-attachments/assets/ba76e765-2510-49bc-9a62-8d54d1fa5019)
 
+If the value equals `"none"`:
 
-Which further launch Using wscript.exe : 
+![](https://github.com/user-attachments/assets/af7d2866-066a-46cc-855d-b2b7bbffd5c8)
 
-<img width="761" height="187" alt="image" src="https://github.com/user-attachments/assets/956587b3-94ec-4a0c-932c-6c743c8896b6" />
+License verification is skipped.\
+Otherwise, the program exits.
 
-<img width="801" height="121" alt="image" src="https://github.com/user-attachments/assets/6f692881-6101-4b6a-9c98-07e7d51cbb17" />
+------------------------------------------------------------------------
 
+## Tasking & Secondary Payload
 
-and at that point we'll start keepting a tab on the IOCS
+The malware connects to its main C2 server to retrieve additional
+instructions.
 
-THe ps1 irm/iex basically download Deno , a legitimita javascript runtime to further execute the JS inside the base64 
+It downloads a secondary file:
 
+![](https://github.com/user-attachments/assets/850be4f1-5dc1-44a9-b74e-e02f68c439a8)
 
-The javascript will contain 'some' layer of obfuscation : 
+The file is executed and subsequently launched using `wscript.exe`:
 
-<img width="1849" height="414" alt="image" src="https://github.com/user-attachments/assets/807be908-2cfa-4175-b826-ce8f93565695" />
+![](https://github.com/user-attachments/assets/956587b3-94ec-4a0c-932c-6c743c8896b6)
 
+![](https://github.com/user-attachments/assets/6f692881-6101-4b6a-9c98-07e7d51cbb17)
 
-Biggest point act as a link between the victim  and the C2 , can connect / schedule / wait run commands and so on 
+------------------------------------------------------------------------
 
+## Deno & JavaScript Stage
 
+The PowerShell (IRM/IEX) stage downloads **Deno**, a legitimate
+JavaScript runtime, used to execute embedded Base64-encoded JavaScript.
 
+The JavaScript contains multiple layers of obfuscation:
+
+![](https://github.com/user-attachments/assets/807be908-2cfa-4175-b826-ce8f93565695)
+
+### Core Functionality
+
+-   Acts as a bridge between victim and C2\
+-   Maintains persistent connectivity\
+-   Receives, schedules, and executes remote commands\
+-   Manages task orchestration
+
+------------------------------------------------------------------------
+
+## Indicators of Compromise (IOCs)
+
+-   Presence of a `.lnk` file under:
+
+    `%AppData%\Microsoft\Windows\Start Menu\Programs\Startup`
+
+-   Active C2 communication observable via:
+
+        netstat -ano | findstr 10044
+
+    (Port 10044 used for C2 communication)
