@@ -69,9 +69,10 @@ in our case download a new file Namely :
 
 
 
-Which further launch 
+Which further launch Using wscript.exe : 
+
 <img width="761" height="187" alt="image" src="https://github.com/user-attachments/assets/956587b3-94ec-4a0c-932c-6c743c8896b6" />
-Using wscript.exe
+
 
 
 
