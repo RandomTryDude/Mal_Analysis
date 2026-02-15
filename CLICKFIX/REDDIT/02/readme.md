@@ -73,6 +73,12 @@ Which further launch Using wscript.exe :
 
 <img width="761" height="187" alt="image" src="https://github.com/user-attachments/assets/956587b3-94ec-4a0c-932c-6c743c8896b6" />
 
+<img width="801" height="121" alt="image" src="https://github.com/user-attachments/assets/6f692881-6101-4b6a-9c98-07e7d51cbb17" />
+
+
+and at that point we'll start keepting a tab on the IOCS
+
+
 
 
 
