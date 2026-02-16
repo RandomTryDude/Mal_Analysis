@@ -155,7 +155,10 @@ The JavaScript contains multiple layers of obfuscation:
 
 ### Ununsed function 
 - Create Firewall Exception
-- Add Registry Key 
+- Add Registry Key
+- Copy Executable
+
+  They may be used in the upcoming version of the campaign but for now , they sit unused
 ------------------------------------------------------------------------
 
 ## Indicators of Compromise (IOCs)
