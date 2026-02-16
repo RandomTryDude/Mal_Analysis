@@ -14,3 +14,10 @@ As of 16/02/2026 it is detected by only one AV
 
 
 
+
+
+Starting with Digler v1.0.2 new domains for the workers  :
+<img width="1119" height="239" alt="image" src="https://github.com/user-attachments/assets/1fc66c33-2178-45fb-b31c-22a863bf2c06" />
+
+
+from a random name to trusted instances 
