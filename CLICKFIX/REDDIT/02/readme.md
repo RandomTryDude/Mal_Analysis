@@ -174,6 +174,6 @@ The JavaScript contains multiple layers of obfuscation:
     (Port 10044 used for C2 communication)
 
 # Campaign Name : Digler
-# Thread Actor : Unknown 
+# Threat Actor : Unknown 
 # Version analysed : Digler 1.0.1 
 
