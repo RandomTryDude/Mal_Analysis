@@ -298,8 +298,9 @@ netsh advfirewall firewall add rule name="oncall Service" dir=out action=allow p
 ### File Hashes
 
 ```
-MD5: DAF1CB75EDD8E045F5F6034FC76C097F (checkbinary.exe)
+MD5: DAF1CB75EDD8E045F5F6034FC76C097F (checkbinary.exe V1.0.1)
 MD5: 14148DB21D3F6AC4C1DAA8D9500DEC26 (Fake OpenVPN installer)
+MD5: AD4DDF9C289F28DA9665BE0CA4742710 (CheckBinary.exe v1.0.2) 
 ```
 
 ------------------------------------------------------------------------
