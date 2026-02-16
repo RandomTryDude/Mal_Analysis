@@ -161,7 +161,7 @@ The JavaScript contains multiple layers of obfuscation:
 - RemoveFirewallRule
 - UnregisterFrom Registry
 
-  They may be used in the upcoming version of the campaign but for now , they sit unused
+
 ------------------------------------------------------------------------
 
 ## Indicators of Compromise (IOCs)
@@ -175,6 +175,25 @@ The JavaScript contains multiple layers of obfuscation:
         netstat -ano | findstr 10044
 
     (Port 10044 used for C2 communication)
+- Registry : Software\Microsoft\Windows\CurrentVersion\Uninstall\Oncall
+DisplayName: oncall , DisplayVersion: * DisplayIcon: * Install Location: * UninstallString: --uninstall EstimatedSize: * VersionMajor: * Version Minor: *
+- Registry : Software\Microsoft\Windows\CurrentVersion\Policies\System
+  Keyname: SoftwareSASGeneration
+- Service.msc : Name: Oncall
+- Firewall Rule :
+- Command ran by netsh
+- -> ADVfirewall
+- firewall add rule name=oncall Service dir=in action=allow program=* enable=yes
+- firewall add rule name=oncall Service dir=out action=allow program=* enable=yes
+
+
+* are field that can be anything
+
+**File Hashes:**
+```
+MD5: DAF1CB75EDD8E045F5F6034FC76C097F (checkbinary.exe)
+MD5: 14148DB21D3F6AC4C1DAA8D9500DEC26 (Fake OpenVPN installer)
+```
 
 # Campaign Name : Digler
 # Threat Actor : Unknown 
