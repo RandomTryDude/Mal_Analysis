@@ -152,8 +152,6 @@ The JavaScript contains multiple layers of obfuscation:
 -   Maintains persistent connectivity\
 -   Receives, schedules, and executes remote commands\
 -   Manages task orchestration
-
-### Ununsed function 
 - Persistance install/uninstall
 - CopyExecutable
 - RegisterinRegistry
