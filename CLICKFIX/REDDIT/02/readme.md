@@ -153,6 +153,9 @@ The JavaScript contains multiple layers of obfuscation:
 -   Receives, schedules, and executes remote commands\
 -   Manages task orchestration
 
+### Ununsed function 
+- Create Firewall Exception
+- Add Registry Key 
 ------------------------------------------------------------------------
 
 ## Indicators of Compromise (IOCs)
@@ -169,4 +172,5 @@ The JavaScript contains multiple layers of obfuscation:
 
 # Campaign Name : Digler
 # Thread Actor : Unknown 
+# Version analysed : Digler 1.0.1 
 
