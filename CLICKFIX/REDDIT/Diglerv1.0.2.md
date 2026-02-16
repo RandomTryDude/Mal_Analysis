@@ -21,3 +21,7 @@ Starting with Digler v1.0.2 new domains for the workers  :
 
 
 from a random name to trusted instances 
+
+<img width="962" height="101" alt="image" src="https://github.com/user-attachments/assets/f5bb5879-b20d-4725-ae28-f00288ed2a1c" />
+
+wonder if their instance is secured ... BUT not now.
