@@ -25,3 +25,21 @@ from a random name to trusted instances
 <img width="962" height="101" alt="image" src="https://github.com/user-attachments/assets/f5bb5879-b20d-4725-ae28-f00288ed2a1c" />
 
 wonder if their instance is secured ... BUT not now.
+
+
+
+the result of the offline Key Verification ( based on the md5 of the date) 
+ 
+ <img width="713" height="239" alt="image" src="https://github.com/user-attachments/assets/4cda4c6a-f54f-4635-b1bd-0f5657b06c63" />
+
+
+ By selected the mov eax,1 , the program will believe we do infact have a valid key , the verification is better than for v1.0.1 but can still be easy to bypass 
+
+
+  
+  
+<img width="646" height="163" alt="image" src="https://github.com/user-attachments/assets/3296284b-1c6a-495d-b30e-ae08d4d1efbc" />
+
+based on the parameters the program was launched with (none , all , windows_service) different persistances mechanism will be put in place the cute IOC !! 
+
+
