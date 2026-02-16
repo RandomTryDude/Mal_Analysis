@@ -154,9 +154,14 @@ The JavaScript contains multiple layers of obfuscation:
 -   Manages task orchestration
 
 ### Ununsed function 
-- Create Firewall Exception
-- Add Registry Key
-- Copy Executable
+- Persistance install/uninstall
+- CopyExecutable
+- RegisterinRegistry
+- InstallWindowsService
+- AddFirewallRule
+- StopAndRemoveService
+- RemoveFirewallRule
+- UnregisterFrom Registry
 
   They may be used in the upcoming version of the campaign but for now , they sit unused
 ------------------------------------------------------------------------
