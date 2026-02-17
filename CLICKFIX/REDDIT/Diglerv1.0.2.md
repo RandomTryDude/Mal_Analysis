@@ -42,4 +42,14 @@ the result of the offline Key Verification ( based on the md5 of the date)
 
 based on the parameters the program was launched with (none , all , windows_service) different persistances mechanism will be put in place the cute IOC !! 
 
+in term of function : 
+The program contain : Stop & remove service , RemoveFirewallRule , unregisterfrom registry , cleanupUserPersistence , DiscoverINstallationPath 
+
+
+
+The program will copy itself With a random name as suggested by : 
+
+<img width="566" height="131" alt="image" src="https://github.com/user-attachments/assets/1524b5fd-07a0-4a12-91c9-f337addd3309" />
+
+Under c:/Users/%username/appdata/local/oncall/*name*
 
