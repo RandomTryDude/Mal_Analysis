@@ -34,10 +34,10 @@ https://www.reddit.com/r/cybersecurity_help/comments/1r4ae25/what_does_this_clic
 |---------|--------|--------|
 | Argument-based execution (`RunFromArgs`) | ❌ | ✅ |
 | C2 via Cloudflare Workers | Generic domains | Trusted-looking domains |
-| Offline license check | ❌ | ✅ (MD5 of date) |
+| Offline license check | ✅ | ✅ (MD5 of date) |
 | Remote license check | ✅ | ✅ (kept) |
-| Screenshot capability | ❌ | ✅ (implemented, not active) |
-| Download observer | ❌ | ✅ (implemented, not active) |
+| Screenshot capability | ✅ | ✅ (implemented, not active) |
+| Download observer | ✅ | ✅ (implemented, not active) |
 | Task types | ps1, exe, cmd, bat | ps1, exe, cmd, bat (unchanged) |
 | Uninstall / cleanup routine | Basic | Extended (removes all v1.0.0/v1.0.1 traces) |
 
