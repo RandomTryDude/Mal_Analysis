@@ -8,7 +8,7 @@
 
 ## Overview
 
-**Digler** is a MaaS (Malware-as-a-Service) campaign disguised as an OpenVPN installer, delivered via ClickFix social engineering. The campaign spans three major versions of a Golang-based implant (`checkbinary.exe`), a JavaScript RAT executed through Deno/Bun, and a Cloudflare Workers-based C2 infrastructure.
+**Digler** is a possible MaaS (Malware-as-a-Service) campaign disguised , delivered via ClickFix. The campaign spans three major versions of a Golang-based implant (`checkbinary.exe`), a JavaScript RAT executed through Deno/Bun, and a Cloudflare Workers-based C2 infrastructure.
 
 | Field | Value |
 |-------|-------|
