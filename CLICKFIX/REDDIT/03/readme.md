@@ -70,7 +70,64 @@ and we get this cutie :
 https://www.virustotal.com/gui/file/169a23484fb0f903cc8374ec797d72078caabab252b46476579ebdb62b847144 
 
 
+<img width="1836" height="454" alt="image" src="https://github.com/user-attachments/assets/3223b719-c852-4688-b2b8-6f56aad4be3d" />
 
+
+there we get all the necessary element to upload any file it may find on the target system 
+
+Target : 
+
+<img width="1256" height="591" alt="image" src="https://github.com/user-attachments/assets/6c861253-e87b-4900-a1cc-457cad3c967f" /> 
+
+anything that may contain some intels  
+
+List : Chrome.exe  , msedge.exe , brave.exe , firefox.exe , opera.exe , operaGX , vivaldi , Yandex  , Roblox (username , ip , payement data and so on) 
+
+Bypass / commands ran : 
+
+reg add HKCU\\software\\Classes\ms-settings\\shell\open\command /ve /t REG_SZ /d fodhelper.exe /f 
+reg add HKCU\\software\\Classes\ms-settings\\shell\open\command /v DelegateExecute /t REG_SZ /d "" /f 
+
+
+Ability to upload files to gofile :
+
+ <img width="1825" height="271" alt="image" src="https://github.com/user-attachments/assets/c4a9c014-a67d-40d2-bc83-c67353adc398" />
+
+ Discord Token Finder 
+
+ <img width="865" height="139" alt="image" src="https://github.com/user-attachments/assets/5f7479f9-f266-4be5-b9fc-7bf0ae97cc14" />
+
+
+ then dump any of the browssers founds DB / tokens :
+ 
+ <img width="1820" height="481" alt="image" src="https://github.com/user-attachments/assets/b371c3fc-b6cc-4d8d-aba5-b8d981daa124" />
+
+ and taskill it once done 
+ as well as 
+
+  <img width="1376" height="242" alt="image" src="https://github.com/user-attachments/assets/b37bd7db-3452-4bb2-8ea8-16795321b842" />
+
+<img width="1741" height="310" alt="image" src="https://github.com/user-attachments/assets/f0c9214e-405e-4f48-88a8-fa6cb84bf109" />
+
+
+
+  any Credit cards saved. (dont save your credit card it's 12 numbers comeon) 
+
+
+first exttraction path :  
+
+<img width="1329" height="145" alt="image" src="https://github.com/user-attachments/assets/94dd938e-fdbe-437c-9a7f-b8811e3f7231" />
+
+as a .zip 
+
+Cleanup of Browsers harvesting : 
+
+<img width="1630" height="352" alt="image" src="https://github.com/user-attachments/assets/903bdc3c-64fe-4a37-926a-b474ffd29a4d" />
+
+
+
+LIke the rest Yandex also get harvested & killed :
+<img width="1813" height="340" alt="image" src="https://github.com/user-attachments/assets/ff4f716c-1236-4b94-aeda-ba576315f270" />
 
 
 
