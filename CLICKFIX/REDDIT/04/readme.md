@@ -139,3 +139,11 @@ Become :
 there's a use case for almost every wallet possible 
 
 
+In term of IOC / extraction point : 
+
+```
+172.67.199.199
+104.18.21.213
+
+```
+
