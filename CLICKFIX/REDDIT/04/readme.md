@@ -116,9 +116,26 @@ With got the whole exe right there in memory for us to dump :)
 
 From there , a few functions 
 like this dissasembly : 
+user32_clipboard_OPEN 
 
-And a few others indicate a possible Crypto related malware , 
+and some crypto related detection let us conclude this malware goal is to pull & replace any crypto you may copy for theirs let test it : 
+
+The first address i copy from from the SILK road FBI seized one : 
+
+<img width="369" height="60" alt="image" src="https://github.com/user-attachments/assets/f3c02049-1f19-47b1-8e34-c5cf730be2ec" />
 
 
+Copy paste it and suddently 
+
+```
+1FfmbHfnpaZjKFvyi1okTjJJusN455paPH
+```
+Become : 
+
+```
+1FJb6AWhaMzihdK8py3czzETb3cdBQ7aPH
+```
+
+there's a use case for almost every wallet possible 
 
 
