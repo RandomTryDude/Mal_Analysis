@@ -147,3 +147,9 @@ In term of IOC / extraction point :
 
 ```
 
+
+
+
+07.7z Contain the Shellcode + Shellcode with a STUB. 
+
+password 'infected' .
